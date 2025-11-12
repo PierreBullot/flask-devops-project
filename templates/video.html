@@ -5,8 +5,10 @@
     <title>Vidéo</title>
 </head>
 <body>
-    <h1>{{ video.title }}</h1>
-    <p>{{ video.id }}</p>
+    <form action="{{ url_for('video', target_id=video.id) }}" method="post">
+        <input type="text" name="title" value="{{ video.title }}" />
+        <input type="submit" value="Modifier">
+    </form>
     <a href="{{ url_for('videos') }}">Liste des videos</a>
 </body>
 </html>

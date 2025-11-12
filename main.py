@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request
-import json
+from flask import Flask, render_template, request, redirect, url_for
+import functions_json
 
 app = Flask(__name__)
 
@@ -11,23 +11,26 @@ def home():
 
 @app.route("/videos")
 def videos():
-    with open("videos.json", mode="r", encoding="utf-8") as videos_file:
-        video_list = json.load(videos_file)
+    video_list = functions_json.get_video_list()
     return render_template("videos.html", videos=video_list)
 
 
-@app.route("/videos/<int:target_id>", methods=["GET", "PUT", "DELETE"])
+@app.route("/videos/<int:target_id>", methods=["GET", "POST", "DELETE"])
 def video(target_id):
+    target_video = functions_json.get_video(target_id)
+
+    # Cherche une vidéo avec l'id écrit dans l'url.
     if request.method == "GET":
-        with open("videos.json", mode="r", encoding="utf-8") as videos_file:
-            videos_data = json.load(videos_file)
-            for video_data in videos_data:
-                if video_data["id"] == target_id:
-                    target_video = video_data
-                    return render_template("video.html", video=target_video)
+        if target_video is not None:
+            return render_template("video.html", video=target_video)
 
-    video_list = [{"title": "test"}, {"title": "placeholder"}, {"title": "simple"}]
-    return render_template("videos.html", videos=video_list)
+    if request.method == "POST":
+        if target_video is not None:
+            target_video["title"] = request.form["title"]
+            functions_json.update_video(target_video)
+            return render_template("video.html", video=target_video)
 
-    # with open("hello_frieda.json", mode="w", encoding="utf-8") as write_file:
-    #     json.dump(dog_data, write_file)
+    # Si aucune vidéo ayant l'id n'a été trouvée, redirige vers la liste des vidéos.
+    return redirect(url_for('videos'))
+
+
