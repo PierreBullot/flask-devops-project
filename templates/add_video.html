@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter une vidéo</title>
+</head>
+<body>
+    <h1>Ajouter une nouvelle vidéo</h1>
+
+    <form action="/videos/add" method="POST">
+        <!-- Champ pour le titre -->
+        <label for="title">Titre de la vidéo :</label><br>
+        <input type="text" id="title" name="title" placeholder="Ex: Cours Flask débutant" required>
+        <br><br>
+
+        <!-- Champ pour l’URL -->
+        <label for="url">URL de la vidéo :</label><br>
+        <input type="url" id="url" name="url" placeholder="https://youtube.com/watch?v=..." required>
+        <br><br>
+
+        <!-- Bouton d’envoi -->
+        <button type="submit">Ajouter la vidéo</button>
+    </form>
+</body>
+</html>
+
