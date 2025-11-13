@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rechercher une vidéo</title>
+</head>
+<body>
+    <h1>Rechercher une vidéo</h1>
+
+    <form action="/videos/search" method="POST">
+        <!-- Champ pour faire un tri sur une partie du titre -->
+        <label for="word">Titre ou une partie du titre de la vidéo :</label><br>
+        <input type="text" id="word" name="word" placeholder="Ex: soleil" value="">
+        <br><br>
+
+        <!-- Champ pour faire un tri sur le nombre de vue -->
+        <label for="number">Combien de vues maximum une vidéo doit-elle avoir pour être affichée ? :</label><br>
+        <input type="number" id="number" name="number" placeholder="Ex: 5" value="0" min="0">
+        <br><br>
+
+        <!-- Bouton d’envoi -->
+        <button type="submit">Lancer la recherche</button>
+    </form>
+</body>
+</html>
