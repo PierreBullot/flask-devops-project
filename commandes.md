@@ -54,16 +54,16 @@ Mettre à jour toutes les branches distantes
 ```Bash 
 git fetch origin
 ```
-soit :  Fusionner dev_pierre dans dev_muriel
+soit :  Fusionner dev-pierre dans dev-muriel
 ```Bash 
 git merge origin/dev_pierre
 ```
-soit : Fusionner dev_pierre dans dev_muriel seulement en local
+soit : Fusionner dev-pierre dans dev-muriel seulement en local
 ```Bash 
 git merge dev_pierre
 ```
 Gérer les conflits  : choisir quelles parties garder et enregistrer les modifications  
-Pousser ma branche dev_muriel sur github  
+Pousser ma branche dev-muriel sur github  
 ```Bash 
 git push origin dev-muriel
 ```

@@ -2,6 +2,10 @@
 import os
 import json
 
+# def get_video_list():
+#     with open("videos.json", mode="r", encoding="utf-8") as videos_file:
+#         return json.load(videos_file)
+
 def get_video_list(file_path):
     """Lit le fichier JSON et renvoie une liste de vidéos."""
     if os.path.exists(file_path):
@@ -13,6 +17,13 @@ def get_video_list(file_path):
     else:
         videos = []                                         # initialise une liste vide
     return videos
+
+def get_video(target_id, file_path):
+    video_list = get_video_list(file_path)
+    for video in video_list:
+        if video["id"] == target_id:
+            return video
+    return None
 
 def create_new_id(video_list):
     """Crée une nouvelle ID."""
@@ -41,6 +52,14 @@ def add_video_into_list(video_list, new_id, new_title, new_url):
     video_list.append(new_video)
     return video_list
 
-
+def update_video(target_video, file_path):
+    video_list = get_video_list(file_path)
+    for video in video_list:
+        if video["id"] == target_video["id"]:
+            video["url"] = target_video["url"]
+            video["title"] = target_video["title"]
+            video["views"] = target_video["views"]
+            break
+    save_video_list(video_list)
 
     
