@@ -25,7 +25,6 @@ def video(target_id):
     if target_video is None:
         return redirect(url_for('videos'))
 
-
     # Cherche une vidéo avec l'id écrit dans l'url.
     if request.method == "GET":
         return render_template("video.html", video=target_video)
@@ -37,7 +36,7 @@ def video(target_id):
             return render_template("video.html", video=target_video)
 
         elif "delete" in request.form:
-            functions_json.delete_video(target_video)
+            functions_json.delete_video(target_video, VIDEOS_FILE)
             return redirect(url_for('videos'))
 
     return redirect(url_for('videos'))
@@ -64,10 +63,12 @@ def add_video_post():
     # revenir à la page du formulaire d'ajout
     return redirect(url_for('add_video_get'))
 
+
 # Route GET /videos/add
 @app.route('/videos/add', methods=['GET'])          # GET : lecture/affichage
 def add_video_get():
     return render_template('add_video.html')        # cherche et interprète le fichier add_video.html dans le dossier templates/
+
 
 if __name__ == '__main__':                          # permet d’exécuter le code à l’intérieur uniquement si ce fichier est lancé directement
     app.run(debug=True)                             # Démarre le serveur de développement Flask et active le mode debug : rechargement automatique à chaque modification du code, affichage d’erreurs détaillées si un bug se produit.
