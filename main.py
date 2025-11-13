@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from function_json import read_videos_json, create_new_id
+from function_json import get_video_list, create_new_id
 import json
 import os
 
@@ -23,10 +23,10 @@ def add_video_post():
     title = request.form['title']
     url = request.form['url']
 
-    # Lire le fichier videos.json
-    videos = read_videos_json(VIDEOS_FILE)
+    # Lire le fichier videos.json et renvoie une liste des videos
+    videos = get_video_list(VIDEOS_FILE)
     
-    # Créer un nouvel ID
+    # Créer une nouvelle ID
     new_id = create_new_id(videos)
 
     # créer une nouvelle vidéo

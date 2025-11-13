@@ -2,7 +2,7 @@
 import os
 import json
 
-def read_videos_json(file_path):
+def get_video_list(file_path):
     """Lit le fichier JSON et renvoie une liste de vidéos."""
     if os.path.exists(file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
