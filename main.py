@@ -4,6 +4,7 @@ import json
 import os
 
 app = Flask(__name__)
+# Récupérer les données du fichier .json
 VIDEOS_FILE = "videos.json"
 
 
@@ -14,29 +15,29 @@ def home():
 
 @app.route("/videos")
 def videos():
+    # Lire le fichier videos.json et renvoie une liste des videos
     video_list = get_video_list(VIDEOS_FILE)
     return render_template("videos.html", videos=video_list)
 
+# Route POST /videos/add
 @app.route('/videos/add', methods=['POST'])
 def add_video_post():
     # Récupérer les données du formulaire 
     title = request.form['title']
     url = request.form['url']
-
     # Lire le fichier videos.json et renvoie une liste des videos
     video_list = get_video_list(VIDEOS_FILE)
     print(f"------------------------------------------- première liste : {video_list}")
-
     # Créer une nouvelle ID
     new_id = create_new_id(video_list)
     print(f"le nouvel id sera : {new_id}")
-
     # Ajouter la nouvelle vidéo à la liste des vidéos
     video_list = add_video_into_list(video_list, new_id, title, url)
     print(f"-------------------------------------------  nouvelle liste : {video_list}")
-    # ENregistrer la liste des vidéos dans le fichier videos.json
+    # enregistrer la liste des vidéos dans le fichier videos.json 
+    # et afficher le message de réussite
     print(save_video_list(video_list, VIDEOS_FILE))
-
+    # revenir à la page du formulaire d'ajout
     return redirect(url_for('add_video_get'))
 
 # Route GET /videos/add
