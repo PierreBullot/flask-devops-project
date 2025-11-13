@@ -32,4 +32,14 @@ def update_video(target_video):
     save_video_list(video_list)
 
 
+def delete_video(target_video):
+    video_list = get_video_list()
+    for index, video in enumerate(video_list):
+        if video["id"] == target_video["id"]:
+            video_list.pop(index)
+            break
+
+    save_video_list(video_list)
+
+
 
