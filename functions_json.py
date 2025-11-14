@@ -62,4 +62,49 @@ def update_video(target_video, file_path):
             break
     save_video_list(video_list)
 
-    
+import json
+
+
+def search_videos(file_path, word, numberOfView):
+    """
+    Recherche les vidéos selon leur titre ou une partie de leur titre et/ou
+    dont leur nombre de vues est inférieur ou égal à celui indiqué.
+    """
+    # Si aucun critère n’est défini
+    if word =="" and numberOfView == 0:
+        return []
+    # Charger le fichier JSON
+    video_list = get_video_list(file_path)
+
+    # Mise en forme du mot-clé : tout en minuscule, pas d'espace en premier ou en dernier
+    word = word.lower().strip()
+
+    results = []
+
+    for video in video_list:
+        # si word n'est pas vide
+        if word:
+            title_match = word in video["title"].lower()    # le titre est valide (true) si word est dans title, sinon invalide (false)
+        else:
+            title_match = True                              # si word est vide alors le titre est valide (true)
+
+        # si numberOfView n'est pas nul
+        if numberOfView > 0:
+            views_match = video["views"] <= numberOfView    #  la vue est valide (true) si elle est <= à numberOfView, sinon invalide (false)
+        else:
+            views_match = True                              # si numberOfView est nul alors la vue est valide (true)
+
+        # si les deux critères sont données :
+        if word and numberOfView > 0:
+            if title_match and views_match:
+                results.append(video)
+        # si seul une partie du titre est donné :
+        elif word and numberOfView == 0:
+            if title_match:
+                results.append(video)
+        # si seul le nombre de vue est donné :
+        elif not word and numberOfView > 0:
+            if views_match:
+                results.append(video)
+
+    return results

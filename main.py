@@ -41,10 +41,13 @@ def search_video():
     if request.method == "GET":
         # Récupérer les données du formulaire 
         word = request.form['word']
-        number = request.form['number']
+        numberfView = request.form['number']
         # Lire le fichier videos.json et renvoie une liste des videos
         video_list = functions_json.get_video_list(VIDEOS_FILE)
-        # rechercher une vidéo parmi la liste des vidéos
+        # rechercher une vidéo contenant word dans son titre et un nombre de vue maximum parmi la liste des vidéos
+        found_videos = functions_json.search_videos(VIDEOS_FILE,word, numberfView)
+        #Afficher les vidéos trouvées
+        if found_videos: 
 
         # revenir à la page du formulaire d'ajout
         return redirect(url_for('home'))
