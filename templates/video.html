@@ -7,7 +7,8 @@
 <body>
     <form action="{{ url_for('video', target_id=video.id) }}" method="post">
         <input type="text" name="title" value="{{ video.title }}" />
-        <input type="submit" value="Modifier">
+        <input type="submit" name="modify" value="Modifier"><br>
+        <input type="submit" name="delete" value="Supprimer la vidéo">
     </form>
     <a href="{{ url_for('videos') }}">Liste des videos</a>
 </body>

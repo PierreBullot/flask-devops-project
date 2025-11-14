@@ -17,23 +17,30 @@ def videos():
     return render_template("videos.html", videos=video_list)
 
 
-@app.route("/videos/<int:target_id>", methods=["GET", "POST", "DELETE"])
+@app.route("/videos/<int:target_id>", methods=["GET", "POST"])
 def video(target_id):
     target_video = functions_json.get_video(target_id, VIDEOS_FILE)
 
+    # Si aucune vidéo ayant l'id n'a été trouvée, redirige vers la liste des vidéos.
+    if target_video is None:
+        return redirect(url_for('videos'))
+
     # Cherche une vidéo avec l'id écrit dans l'url.
     if request.method == "GET":
-        if target_video is not None:
-            return render_template("video.html", video=target_video)
+        return render_template("video.html", video=target_video)
 
     if request.method == "POST":
-        if target_video is not None:
+        if "modify" in request.form:
             target_video["title"] = request.form["title"]
             functions_json.update_video(target_video, VIDEOS_FILE)
             return render_template("video.html", video=target_video)
 
-    # Si aucune vidéo ayant l'id n'a été trouvée, redirige vers la liste des vidéos.
+        elif "delete" in request.form:
+            functions_json.delete_video(target_video, VIDEOS_FILE)
+            return redirect(url_for('videos'))
+
     return redirect(url_for('videos'))
+
 
 # route GET /videos/search
 @app.route('/videos/search', methods=["GET", "POST"])
@@ -42,8 +49,6 @@ def search_video():
         # Récupérer les données du formulaire 
         word = request.form['word']
         numberfView = int(request.form['number'])
-        # Lire le fichier videos.json et renvoie une liste des videos
-        video_list = functions_json.get_video_list(VIDEOS_FILE)
         # rechercher une vidéo contenant word dans son titre et un nombre de vue maximum parmi la liste des vidéos
         found_videos = functions_json.search_videos(VIDEOS_FILE,word, numberfView)
         #Afficher les vidéos trouvées
