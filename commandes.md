@@ -42,11 +42,6 @@ pip install flask
 pip freeze > requirements.txt
 ```
 
-### Installer tout ce que contient le fichier requirements.txt
-```Bash 
-pip install -r requirements.txt
-```
-
 ### fusionner la branche dev_pierre dans ma branche dev_muriel
 Vérifier la branche sur laquelle on se trouve  
 Se placer sur la branche dev_muriel si besoin  
