@@ -5,10 +5,12 @@
     <title>Vidéos</title>
 </head>
 <body>
-    <ul>
-        {% for video in videos %}
+    {% for video in videos %}
+    <div class="video-item">
+        <ul>
             <li><a href="{{ url_for('video', target_id=video.id) }}">{{ video.title }}</a></li>
-        {% endfor %}
-    </ul>
+        </ul>
+    </div>
+    {% endfor %}
 </body>
 </html>
