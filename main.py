@@ -38,28 +38,29 @@ def video(target_id):
 # route GET /videos/search
 @app.route('/videos/search', methods=["GET", "POST"])
 def search_video():
-    if request.method == "GET":
+    if request.method == "POST":
         # Récupérer les données du formulaire 
         word = request.form['word']
-        numberfView = request.form['number']
+        numberfView = int(request.form['number'])
         # Lire le fichier videos.json et renvoie une liste des videos
         video_list = functions_json.get_video_list(VIDEOS_FILE)
         # rechercher une vidéo contenant word dans son titre et un nombre de vue maximum parmi la liste des vidéos
         found_videos = functions_json.search_videos(VIDEOS_FILE,word, numberfView)
         #Afficher les vidéos trouvées
         if found_videos: 
+            return render_template("videos.html", videos=found_videos)
 
         # revenir à la page du formulaire d'ajout
         return redirect(url_for('home'))
     
-    if request.method == "POST":
+    if request.method == "GET":
         return render_template('search_video.html')        # cherche et interprète le fichier search_video.html dans le dossier templates/
 
 
 # Route POST/videos/add  et GET//videos/add
 @app.route('/videos/add', methods=["GET", "POST"])
 def add_video():
-    if request.method == "GET":
+    if request.method == "POST":
         # Récupérer les données du formulaire 
         title = request.form['title']
         url = request.form['url']
@@ -75,7 +76,7 @@ def add_video():
         # revenir à la page du formulaire d'ajout
         return redirect(url_for('home'))
     
-    if request.method == "POST":
+    if request.method == "GET":
         return render_template('add_video.html')        # cherche et interprète le fichier add_video.html dans le dossier templates/
 
 

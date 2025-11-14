@@ -27,7 +27,7 @@ git push -u origin dev-muriel
 git branch
 ```
 
-### Activer l'environnement virtuek.
+### Activer l'environnement virtuel.
 ```Bash 
 .\.venv\Scripts\activate 
 ```
